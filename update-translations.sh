@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Script to automate phraseapp translations workflow
 #  1. Checks the branch to master stashing changes
 #  2. Creates new update-translations/[date] branch
@@ -31,12 +33,20 @@ update_translations() {
   echo "Pull lastest changes:"
   git pull
 
-  today=`date +%d-%m-%y`
+  today=`date +%s`
   echo "Creating new branch update-translations/$today"
   git checkout -b update-translations/$today
 
   echo "Pulling translations..."
   phraseapp pull
+
+  echo "Translations were pulled!"
+  read -p "You can make changes while I wait. Continue? (y|n): " answer2
+
+  if [[ "$answer2" == "n" ]]; then
+    echo "Aborted"
+    exit 1
+  fi
 
   echo "Adding commit:"
   git add . && git commit -m "Update translations $today"
@@ -55,7 +65,7 @@ update_translations() {
   fi
 
   echo 'All done !!'
-  exit 1
+  exit 0
 }
 
 # Run function
