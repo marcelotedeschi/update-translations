@@ -39,8 +39,9 @@ update_translations() {
 
   echo "Pulling translations..."
   phraseapp pull
+  git add .
 
-  echo "Translations were pulled!"
+  echo "Translations were pulled and changes were staged! Next step is commit."
   read -p "You can make changes while I wait. Continue? (y|n): " answer2
 
   if [[ "$answer2" == "n" ]]; then
@@ -49,7 +50,7 @@ update_translations() {
   fi
 
   echo "Adding commit:"
-  git add . && git commit -m "Update translations $today"
+  git commit -m "Update translations $today"
 
   echo "Pushing to origin"
   git push origin HEAD
