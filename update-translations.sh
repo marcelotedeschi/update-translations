@@ -33,7 +33,7 @@ update_translations() {
   echo "Pull lastest changes:"
   git pull
 
-  today=`date +%s`
+  today=`date +%d-%m-%Y_%H-%M-%S`
   echo "Creating new branch update-translations/$today"
   git checkout -b update-translations/$today
 
